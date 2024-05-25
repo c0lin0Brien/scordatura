@@ -1,6 +1,9 @@
 'use client';
 import React from 'react';
 
+let playing: boolean = false;
+
+// Map of all possible notes that can be played
 const totalNoteMap: string[] = 
     ['E1', 'F1', 'Gb1', 'G1', 'Ab1', 'A1', 'Bb1', 'B1', 'C2', 'Db2', 'D2', 'Eb2',
     'E2', 'F2', 'Gb2', 'G2', 'Ab2', 'A2', 'Bb2', 'B2', 'C3', 'Db3', 'D3', 'Eb3',
@@ -13,15 +16,29 @@ interface IntervalProps {
     note: string;
 }
 
+window.addEventListener('mousedown', () => {
+    playing = true;
+})
+
+window.addEventListener('mouseup', () => {
+    playing = false;
+})
+
 const Interval: React.FC<IntervalProps> = ({ string = 0, note}) => {
+    const strum = () => {
+        if (playing) {
+            const audio = new Audio('/sound/' + note + '.mp3');
+            audio.play();
+        }
+    }
     const play = () => {
         console.log(`string ${string} note ${note}`);
         const audio = new Audio('/sound/' + note + '.mp3');
         audio.play();
     }
     return (
-        <div className="interval" onClick={play}>
-        
+        <div className="interval" onClick={play} onMouseOver={strum}>
+            {/* {note} */}
         </div>
     )
 }
