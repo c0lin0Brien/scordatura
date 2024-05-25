@@ -7,7 +7,7 @@ import String from './string';
 export default function Guitar() {
     // TODO: String components
     return (
-        <div className="guitar">
+        <div>
             <String string={0}></String>
         </div>
     )

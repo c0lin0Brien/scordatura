@@ -8,11 +8,11 @@ interface IntervalProps {
 
 const Interval: React.FC<IntervalProps> = ({ string = 0, note = 0}) => {
     const play = () => {
-        console.log("string " + {string} + " note " + {note})
+        console.log(`string ${string} note ${note}`);
     }
     return (
         <div className="interval" onClick={play}>
-            {string} Note {note}
+        
         </div>
     )
 }
@@ -24,7 +24,8 @@ interface StringProps {
 const String: React.FC<StringProps> = ({string = 0}) => {
     const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={index} string={string} />);
     return (
-        <div className="string">{notes}</div>
+        // TODO: Make this flex and nice
+        <div className="flex justify-evenly">{notes}</div>
     );
 }
 

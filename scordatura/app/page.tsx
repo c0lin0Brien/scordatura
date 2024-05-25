@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Guitar from "./components/guitar";
+import Guitar from "../components/guitar";
 
 export default function Home() {
   return (

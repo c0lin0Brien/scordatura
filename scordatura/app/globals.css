@@ -2,4 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-
+@layer components {
+  .interval {
+    background-color: blue;
+    outline: solid;
+    outline-color: black;
+    outline-width: 2px;
+    height: 4vh;
+    width: 100vh;
+  }
+}
