@@ -6,9 +6,10 @@ import String from './string';
 // TODO: Adjust level of strings available 
 export default function Guitar() {
     // TODO: String components
+    const strings = Array.from( {length: 6}, (_, index) => <String key={index} string={index} />);
     return (
         <div>
-            <String string={0}></String>
+            {strings}
         </div>
     )
 }
