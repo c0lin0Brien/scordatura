@@ -14,6 +14,7 @@ const totalNoteMap: string[] =
 interface IntervalProps {
     string: number;
     note: string;
+    children?: string;
 }
 
 window.addEventListener('mousedown', () => {
@@ -24,7 +25,7 @@ window.addEventListener('mouseup', () => {
     playing = false;
 })
 
-const Interval: React.FC<IntervalProps> = ({ string = 0, note}) => {
+const Interval: React.FC<IntervalProps> = ({ string = 0, note, children}) => {
     const strum = () => {
         if (playing) {
             play();
@@ -36,7 +37,9 @@ const Interval: React.FC<IntervalProps> = ({ string = 0, note}) => {
         audio.play();
     }
     return (
-        <div className="interval" onClick={play} onMouseOver={strum} />
+        <div className="interval" onClick={play} onMouseOver={strum}>
+            {children}
+        </div>
     )
 }
 
@@ -46,10 +49,15 @@ interface StringProps {
 }
 
 const String: React.FC<StringProps> = ({string = 0, openNote}) => {
-    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index]} string={string} />);
+    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]} string={string}/>);
     return (
         // TODO: Make this flex and nice
-        <div className="flex justify-evenly">{notes}</div>
+        <div className="flex justify-evenly"> 
+            <Interval string={string} note={totalNoteMap[openNote]}>
+                {totalNoteMap[openNote]}
+            </Interval>
+            {notes}
+        </div>
     );
 }
 

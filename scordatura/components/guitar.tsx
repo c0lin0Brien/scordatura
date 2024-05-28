@@ -30,11 +30,14 @@ const Guitar = () => {
 
     const strings = Array.from( {length: 6}, (_, index) => <String key={index} string={index}
      openNote={currentTuning[index]}/>);
+    
     return (
         <div>
-            {strings}
-            <button onClick={randomizeTuning}>Randomize</button>
-            <button onClick={resetTuning}>Reset</button>
+            <div className='fretBoard'>{strings}</div>
+            <div className='flex justify-center'>
+                <button onClick={randomizeTuning}>Randomize</button>
+                <button onClick={resetTuning}>Reset</button>
+            </div>
         </div>
     )
 }

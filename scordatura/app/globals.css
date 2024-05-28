@@ -4,12 +4,27 @@
 
 @layer components {
   .interval {
-    background-color: blue;
     outline: solid;
     outline-color: black;
     outline-width: 2px;
     height: 4vh;
     width: 100vh;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .fretBoard {
+    outline: solid;
+    outline-color: black;
+    outline-width: 3px;
+    margin-right: 2vw;
+    margin-left: 2vw;
   }
 }
 
