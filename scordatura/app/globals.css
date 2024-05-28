@@ -12,3 +12,12 @@
     width: 100vh;
   }
 }
+
+button {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  font-size: 3vh;
+  padding: 0.5vh;
+  margin: 0.5vh;
+}
