@@ -27,8 +27,7 @@ window.addEventListener('mouseup', () => {
 const Interval: React.FC<IntervalProps> = ({ string = 0, note}) => {
     const strum = () => {
         if (playing) {
-            const audio = new Audio('/sound/' + note + '.mp3');
-            audio.play();
+            play();
         }
     }
     const play = () => {
@@ -37,9 +36,7 @@ const Interval: React.FC<IntervalProps> = ({ string = 0, note}) => {
         audio.play();
     }
     return (
-        <div className="interval" onClick={play} onMouseOver={strum}>
-            {/* {note} */}
-        </div>
+        <div className="interval" onClick={play} onMouseOver={strum} />
     )
 }
 
