@@ -18,8 +18,13 @@ const Guitar = () => {
             let change: number = randomInt(12);
             newTuning.push(standardTuning[i] - change);
         }
-        console.log(newTuning);
         setTuning(newTuning);
+        console.log(currentTuning);
+    }
+
+    const resetTuning = () => {
+        setTuning(standardTuning);
+        console.log(currentTuning)
     }
     // TODO: String components
 
@@ -29,6 +34,7 @@ const Guitar = () => {
         <div>
             {strings}
             <button onClick={randomizeTuning}>Randomize</button>
+            <button onClick={resetTuning}>Reset</button>
         </div>
     )
 }
