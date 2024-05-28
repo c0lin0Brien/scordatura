@@ -26,7 +26,19 @@ const Guitar = () => {
         setTuning(standardTuning);
         console.log(currentTuning)
     }
-    // TODO: String components
+    
+    const FretMarker: React.FC = () => {
+        const createArray = (n: number) => Array.from({ length: n }, (_, i) => i);
+        let fretIndex: number[] = createArray(23);
+
+        const fretMarks = Array.from({ length: 23 }, (_, i) => <div className='w-[100vh] text-center'>{i}</div>)
+
+        return (
+            <div className='flex justify-evenly mx-[2vw]'>
+                {fretMarks}
+            </div>
+        )
+    }
 
     const strings = Array.from( {length: 6}, (_, index) => <String key={index} string={index}
      openNote={currentTuning[index]}/>);
@@ -34,6 +46,7 @@ const Guitar = () => {
     return (
         <div>
             <div className='fretBoard'>{strings}</div>
+            <FretMarker />
             <div className='flex justify-center'>
                 <button onClick={randomizeTuning}>Randomize</button>
                 <button onClick={resetTuning}>Reset</button>
