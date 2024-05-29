@@ -46,7 +46,7 @@ const Guitar = () => {
     }
 
     const strings = Array.from( {length: 6}, (_, index) => <String key={index} string={index}
-     openNote={currentTuning[index]}/>);
+     openNote={currentTuning[index]} chord={chordMode}/>);
     
     return (
         <div>

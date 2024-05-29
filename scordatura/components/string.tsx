@@ -15,6 +15,7 @@ interface IntervalProps {
     string: number;
     note: string;
     children?: string;
+    chord: boolean;
 }
 
 window.addEventListener('mousedown', () => {
@@ -25,20 +26,26 @@ window.addEventListener('mouseup', () => {
     playing = false;
 })
 
-const strum = (string: number, note: string) => {
-    if (playing) {
-        play(string, note);
+const strum = (string: number, note: string, chordOn: boolean) => {
+    if (!chordOn) {
+        if (playing) {
+            play(string, note, chordOn);
+        }
     }
 }
-const play = (string: number, note: string) => {
-    console.log(`string ${string} note ${note}`);
-    const audio = new Audio('/sound/' + note + '.mp3');
-    audio.play();
+const play = (string: number, note: string, chordOn: boolean) => {
+    if (!chordOn) {
+        console.log(`string ${string} note ${note}`);
+        const audio = new Audio('/sound/' + note + '.mp3');
+        audio.play();
+    } else {
+        console.log(`string ${string} note ${note} selected for chord`);
+    }
 }
 
-const Interval: React.FC<IntervalProps> = ({ string = 0, note, children}) => {
+const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chord}) => {
     return (
-        <div className="interval" onClick={() => play(string, note)} onMouseOver={() => strum(string, note)}>
+        <div className="interval" onClick={() => play(string, note, chord)} onMouseOver={() => strum(string, note, chord)}>
             {children}
         </div>
     )
@@ -47,15 +54,16 @@ const Interval: React.FC<IntervalProps> = ({ string = 0, note, children}) => {
 interface StringProps {
     string: number;
     openNote: number;
+    chord: boolean;
 }
 
-const String: React.FC<StringProps> = ({string = 0, openNote}) => {
-    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]} string={string}/>);
+const String: React.FC<StringProps> = ({string = 0, openNote, chord}) => {
+    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]} string={string} chord={chord}/>);
     return (
         // TODO: Make this flex and nice
         <div className="flex justify-evenly"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="4vw" height="4vh" viewBox="0 0 100 100" className='mx-[1vw]'
-             onClick={() => play(string, totalNoteMap[openNote])} onMouseOver={() => strum(string, totalNoteMap[openNote])}>
+             onClick={() => play(string, totalNoteMap[openNote], chord)} onMouseOver={() => strum(string, totalNoteMap[openNote], chord)}>
                 <circle cx="50" cy="50" r="46" fill='white' stroke='black' stroke-width="4px">
                 </circle>
                 <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="2px" dy=".3em" fontSize={"40px"}>{totalNoteMap[openNote]}</text>
