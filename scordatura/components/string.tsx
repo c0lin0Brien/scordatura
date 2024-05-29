@@ -25,19 +25,20 @@ window.addEventListener('mouseup', () => {
     playing = false;
 })
 
+const strum = (string: number, note: string) => {
+    if (playing) {
+        play(string, note);
+    }
+}
+const play = (string: number, note: string) => {
+    console.log(`string ${string} note ${note}`);
+    const audio = new Audio('/sound/' + note + '.mp3');
+    audio.play();
+}
+
 const Interval: React.FC<IntervalProps> = ({ string = 0, note, children}) => {
-    const strum = () => {
-        if (playing) {
-            play();
-        }
-    }
-    const play = () => {
-        console.log(`string ${string} note ${note}`);
-        const audio = new Audio('/sound/' + note + '.mp3');
-        audio.play();
-    }
     return (
-        <div className="interval" onClick={play} onMouseOver={strum}>
+        <div className="interval" onClick={() => play(string, note)} onMouseOver={() => strum(string, note)}>
             {children}
         </div>
     )
@@ -53,7 +54,8 @@ const String: React.FC<StringProps> = ({string = 0, openNote}) => {
     return (
         // TODO: Make this flex and nice
         <div className="flex justify-evenly"> 
-            <svg xmlns="http://www.w3.org/2000/svg" width="4vw" height="4vh" viewBox="0 0 100 100" className='mx-[1vw]'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="4vw" height="4vh" viewBox="0 0 100 100" className='mx-[1vw]'
+             onClick={() => play(string, totalNoteMap[openNote])} onMouseOver={() => strum(string, totalNoteMap[openNote])}>
                 <circle cx="50" cy="50" r="46" fill='white' stroke='black' stroke-width="4px">
                 </circle>
                 <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="2px" dy=".3em" fontSize={"40px"}>{totalNoteMap[openNote]}</text>
