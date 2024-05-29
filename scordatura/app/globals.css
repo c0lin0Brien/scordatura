@@ -3,23 +3,18 @@
 @tailwind utilities;
 
 @layer components {
-  .interval {
+  /* .interval {
     outline: solid;
     outline-color: black;
     outline-width: 2px;
     min-height: 4vh;
     width: 10vw;
-    user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
     text-align: center;
     justify-content: center;
     justify-items: center;
     display: flex;
     flex-direction: column;
-  }
+  } */
   .fretBoard {
     outline: solid;
     outline-color: black;

@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 
 let playing: boolean = false;
 
@@ -44,8 +44,17 @@ const play = (string: number, note: string, chordOn: boolean) => {
 }
 
 const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chord}) => {
+    const [toggled, setToggled] = useState('bg-white');
+
+    const intervalClick = () => {
+        play(string, note, chord);
+        if (chord) {
+            setToggled(prevColor => prevColor === 'bg-white' ? 'bg-black' : 'bg-white');
+        }
+    }
     return (
-        <div className="interval" onClick={() => play(string, note, chord)} onMouseOver={() => strum(string, note, chord)}>
+        <div className={`${toggled} outline-2 outline outline-black min-h-[4vh] w-[10vw] text-center justify-center justify-items-center flex flex-col`}
+         onClick={() => intervalClick()} onMouseOver={() => strum(string, note, chord)}>
             {children}
         </div>
     )
