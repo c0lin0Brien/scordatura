@@ -68,15 +68,29 @@ interface StringProps {
 
 const String: React.FC<StringProps> = ({string = 0, openNote, chord}) => {
     const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]} string={string} chord={chord}/>);
+
+    const [openToggle, setOpen] = useState('white');
+    const [openText, setOpenText] = useState('black');
+
+    const openClick = () => {
+        play(string, totalNoteMap[openNote], chord);
+        if (chord) {
+            setOpen(prevColor => prevColor === 'white' ? 'black' : 'white');
+            setOpenText(prevColor => prevColor === 'black' ? 'white' : 'black');
+        }
+    }
+
     return (
         // TODO: Make this flex and nice
         <div className="flex justify-evenly"> 
+            {/* Open note */}
             <svg xmlns="http://www.w3.org/2000/svg" width="4vw" height="4vh" viewBox="0 0 100 100" className='mx-[1vw]'
-             onClick={() => play(string, totalNoteMap[openNote], chord)} onMouseOver={() => strum(string, totalNoteMap[openNote], chord)}>
-                <circle cx="50" cy="50" r="46" fill='white' stroke='black' stroke-width="4px">
+             onClick={() => openClick()} onMouseOver={() => strum(string, totalNoteMap[openNote], chord)}>
+                <circle cx="50" cy="50" r="46" fill={`${openToggle}`} stroke='black' stroke-width="4px">
                 </circle>
-                <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="2px" dy=".3em" fontSize={"40px"}>{totalNoteMap[openNote]}</text>
+                <text x="50%" y="50%" text-anchor="middle" color={`${openText}`} stroke={`${openText}`} stroke-width="4px" dy=".3em" fontSize={"40px"}>{totalNoteMap[openNote]}</text>
             </svg>
+            {/* Rest of notes */}
             {notes}
         </div>
     );
