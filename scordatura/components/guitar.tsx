@@ -34,13 +34,12 @@ const Guitar = () => {
     }
     
     const FretMarker: React.FC = () => {
-        const createArray = (n: number) => Array.from({ length: n }, (_, i) => i);
-        let fretIndex: number[] = createArray(23);
 
-        const fretMarks = Array.from({ length: 23 }, (_, i) => <div className='w-[100vh] text-center'>{i}</div>)
+        const fretMarks = Array.from({ length: 22 }, (_, i) => <div className='w-[100vh] text-center'>{i + 1}</div>)
 
         return (
             <div className='flex justify-evenly mx-[2vw]'>
+                <div className='text-center mx-[1vw] w-[22vw]'>0</div>
                 {fretMarks}
             </div>
         )
