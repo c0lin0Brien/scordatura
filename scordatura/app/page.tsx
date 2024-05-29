@@ -1,10 +1,11 @@
 import Image from "next/image";
-import Guitar from "../components/guitar";
+import Guitar from "@/components/guitar";
+import Header from "@/components/header";
 
 export default function Home() {
   return (
     <div>
-      Guitar finna be here
+      <Header />
       <Guitar />
     </div>
   );

@@ -7,8 +7,8 @@
     outline: solid;
     outline-color: black;
     outline-width: 2px;
-    height: 4vh;
-    width: 100vh;
+    min-height: 4vh;
+    width: 10vw;
     user-select: none;
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -16,6 +16,7 @@
     -o-user-select: none;
     text-align: center;
     justify-content: center;
+    justify-items: center;
     display: flex;
     flex-direction: column;
   }
