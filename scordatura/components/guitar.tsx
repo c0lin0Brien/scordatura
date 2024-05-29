@@ -8,6 +8,8 @@ const Guitar = () => {
     const standardTuning: number[] = [12, 17, 22, 27, 31, 36];
     const [currentTuning, setTuning] = useState([...standardTuning]);
 
+    const [chordMode, setChord] = useState(false);
+
     const randomInt = (max: number) => {
         return Math.floor(Math.random() * max);
     }
@@ -25,6 +27,10 @@ const Guitar = () => {
     const resetTuning = () => {
         setTuning(standardTuning);
         console.log(currentTuning)
+    }
+
+    const toggleChord = () => {
+        setChord(!chordMode);
     }
     
     const FretMarker: React.FC = () => {
@@ -50,6 +56,7 @@ const Guitar = () => {
             <div className='flex justify-center'>
                 <button onClick={randomizeTuning}>Randomize</button>
                 <button onClick={resetTuning}>Reset</button>
+                <button onClick={toggleChord}>Chord Builder</button>
             </div>
         </div>
     )
