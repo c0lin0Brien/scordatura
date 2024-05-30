@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
+import { ChordContext } from '@/app/page';
 
 let playing: boolean = false;
 
@@ -16,6 +17,8 @@ interface IntervalProps {
     note: string;
     children?: string;
     chordOn: boolean;
+    setChord: React.Dispatch<React.SetStateAction<string[]>>;
+    currentChord: string[];
 }
 
 window.addEventListener('mousedown', () => {
@@ -43,13 +46,16 @@ const play = (string: number, note: string, chordOn: boolean) => {
     }
 }
 
-const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn}) => {
+const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn, setChord, currentChord}) => {
     const [toggled, setToggled] = useState('bg-white');
 
     const intervalClick = () => {
         play(string, note, chordOn);
         if (chordOn) {
             setToggled(prevColor => prevColor === 'bg-white' ? 'bg-black' : 'bg-white');
+            let newChord: string[] = Array(...currentChord);
+            newChord[string] = note;
+            setChord(newChord);
         }
     }
     return (
@@ -64,10 +70,14 @@ interface StringProps {
     string: number;
     openNote: number;
     chordOn: boolean;
+    setChord: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const String: React.FC<StringProps> = ({string = 0, openNote, chordOn}) => {
-    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]} string={string} chordOn={chordOn}/>);
+const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}) => {
+    let currentChord: string[] = useContext(ChordContext);
+
+    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]}
+     string={string} chordOn={chordOn} setChord={setChord} currentChord={currentChord}/>);
 
     const [openToggle, setOpen] = useState('white');
     const [openText, setOpenText] = useState('black');
@@ -77,6 +87,9 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chordOn}) => {
         if (chordOn) {
             setOpen(prevColor => prevColor === 'white' ? 'black' : 'white');
             setOpenText(prevColor => prevColor === 'black' ? 'white' : 'black');
+            let newChord: string[] = Array(...currentChord);
+            newChord[string] = totalNoteMap[openNote];
+            setChord(newChord);
         }
     }
 

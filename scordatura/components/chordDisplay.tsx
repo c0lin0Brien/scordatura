@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { dummyChordContext } from '@/app/page'
+import { ChordContext } from '@/app/page'
 
 interface ChordDisplayProps {
     chordMode?: boolean;
@@ -10,7 +10,7 @@ const ChordDisplay: React.FC<ChordDisplayProps> = ({chordMode, currentChord}) =>
 
     return(
         <div>
-            Current Chord: {useContext(dummyChordContext)}
+            Current Chord: {useContext(ChordContext)}
         </div>
     )
 }

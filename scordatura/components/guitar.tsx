@@ -1,15 +1,16 @@
 'use client';
 import React, { useState } from 'react';
 import String from './string';
-import { start } from 'repl';
+import { ChordContext } from '@/app/page';
 
 interface GuitarProps {
     chordMode: boolean;
-    setChord: React.Dispatch<React.SetStateAction<boolean>>;
+    setChordMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setChord: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 // TODO: Adjust level of strings available 
-const Guitar: React.FC<GuitarProps> = ({chordMode, setChord}) => {
+const Guitar: React.FC<GuitarProps> = ({chordMode, setChordMode, setChord}) => {
     const standardTuning: number[] = [12, 17, 22, 27, 31, 36];
     const [currentTuning, setTuning] = useState([...standardTuning]);
 
@@ -33,7 +34,7 @@ const Guitar: React.FC<GuitarProps> = ({chordMode, setChord}) => {
     }
 
     const toggleChord = () => {
-        setChord(!chordMode);
+        setChordMode(!chordMode);
     }
     
     const FretMarker: React.FC = () => {
@@ -49,7 +50,7 @@ const Guitar: React.FC<GuitarProps> = ({chordMode, setChord}) => {
     }
 
     const strings = Array.from( {length: 6}, (_, index) => <String key={index} string={index}
-     openNote={currentTuning[index]} chordOn={chordMode}/>);
+     openNote={currentTuning[index]} chordOn={chordMode} setChord={setChord}/>);
     
     return (
         <div>

@@ -4,22 +4,20 @@ import Guitar from "@/components/guitar";
 import Header from "@/components/header";
 import ChordDisplay from "@/components/chordDisplay";
 
-export const dummyChordContext = createContext('A Maj 7');
+export const ChordContext = createContext(Array(6));
 
 export default function Home() {
-
-  const dummyChord = useContext(dummyChordContext);
 
   const [currentChord, setCurrentChord] = useState(Array(6));
   const [chordMode, setChordMode] = useState(false);
 
   return (
     <>
-      <dummyChordContext.Provider value={dummyChord}>
+      <ChordContext.Provider value={currentChord}>
         <Header />
-        <Guitar chordMode={chordMode} setChord={setChordMode} />
+        <Guitar chordMode={chordMode} setChordMode={setChordMode} setChord={setCurrentChord}/>
         <ChordDisplay />
-      </dummyChordContext.Provider>
+      </ChordContext.Provider>
     </>
   );
 }
