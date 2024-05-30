@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import String from './string';
 import { start } from 'repl';
 
+interface GuitarProps {
+    chordMode: boolean;
+    setChord: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 // TODO: Adjust level of strings available 
-const Guitar = () => {
+const Guitar: React.FC<GuitarProps> = ({chordMode, setChord}) => {
     const standardTuning: number[] = [12, 17, 22, 27, 31, 36];
     const [currentTuning, setTuning] = useState([...standardTuning]);
-
-    const [chordMode, setChord] = useState(false);
 
     const randomInt = (max: number) => {
         return Math.floor(Math.random() * max);
@@ -46,7 +49,7 @@ const Guitar = () => {
     }
 
     const strings = Array.from( {length: 6}, (_, index) => <String key={index} string={index}
-     openNote={currentTuning[index]} chord={chordMode}/>);
+     openNote={currentTuning[index]} chordOn={chordMode}/>);
     
     return (
         <div>

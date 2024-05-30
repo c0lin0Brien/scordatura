@@ -15,7 +15,7 @@ interface IntervalProps {
     string: number;
     note: string;
     children?: string;
-    chord: boolean;
+    chordOn: boolean;
 }
 
 window.addEventListener('mousedown', () => {
@@ -43,18 +43,18 @@ const play = (string: number, note: string, chordOn: boolean) => {
     }
 }
 
-const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chord}) => {
+const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn}) => {
     const [toggled, setToggled] = useState('bg-white');
 
     const intervalClick = () => {
-        play(string, note, chord);
-        if (chord) {
+        play(string, note, chordOn);
+        if (chordOn) {
             setToggled(prevColor => prevColor === 'bg-white' ? 'bg-black' : 'bg-white');
         }
     }
     return (
         <div className={`${toggled} outline-2 outline outline-black min-h-[4vh] w-[10vw] text-center justify-center justify-items-center flex flex-col`}
-         onClick={() => intervalClick()} onMouseOver={() => strum(string, note, chord)}>
+         onClick={() => intervalClick()} onMouseOver={() => strum(string, note, chordOn)}>
             {children}
         </div>
     )
@@ -63,18 +63,18 @@ const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chord})
 interface StringProps {
     string: number;
     openNote: number;
-    chord: boolean;
+    chordOn: boolean;
 }
 
-const String: React.FC<StringProps> = ({string = 0, openNote, chord}) => {
-    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]} string={string} chord={chord}/>);
+const String: React.FC<StringProps> = ({string = 0, openNote, chordOn}) => {
+    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]} string={string} chordOn={chordOn}/>);
 
     const [openToggle, setOpen] = useState('white');
     const [openText, setOpenText] = useState('black');
 
     const openClick = () => {
-        play(string, totalNoteMap[openNote], chord);
-        if (chord) {
+        play(string, totalNoteMap[openNote], chordOn);
+        if (chordOn) {
             setOpen(prevColor => prevColor === 'white' ? 'black' : 'white');
             setOpenText(prevColor => prevColor === 'black' ? 'white' : 'black');
         }
@@ -85,7 +85,7 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chord}) => {
         <div className="flex justify-evenly"> 
             {/* Open note */}
             <svg xmlns="http://www.w3.org/2000/svg" width="4vw" height="4vh" viewBox="0 0 100 100" className='mx-[1vw]'
-             onClick={() => openClick()} onMouseOver={() => strum(string, totalNoteMap[openNote], chord)}>
+             onClick={() => openClick()} onMouseOver={() => strum(string, totalNoteMap[openNote], chordOn)}>
                 <circle cx="50" cy="50" r="46" fill={`${openToggle}`} stroke='black' stroke-width="4px">
                 </circle>
                 <text x="50%" y="50%" text-anchor="middle" color={`${openText}`} stroke={`${openText}`} stroke-width="4px" dy=".3em" fontSize={"40px"}>{totalNoteMap[openNote]}</text>
