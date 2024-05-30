@@ -54,8 +54,13 @@ const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn
         if (chordOn) {
             setToggled(prevColor => prevColor === 'bg-white' ? 'bg-black' : 'bg-white');
             let newChord: string[] = Array(...currentChord);
-            newChord[string] = note;
-            setChord(newChord);
+            if (newChord[string] == note) {
+                newChord[string] = '';
+                setChord(newChord);
+            } else {
+                newChord[string] = note;
+                setChord(newChord);
+            }
         }
     }
     return (
@@ -88,8 +93,13 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}
             setOpen(prevColor => prevColor === 'white' ? 'black' : 'white');
             setOpenText(prevColor => prevColor === 'black' ? 'white' : 'black');
             let newChord: string[] = Array(...currentChord);
-            newChord[string] = totalNoteMap[openNote];
-            setChord(newChord);
+            if (newChord[string] == totalNoteMap[openNote]) {
+                newChord[string] = "";
+                setChord(newChord);
+            } else {
+                newChord[string] = totalNoteMap[openNote];
+                setChord(newChord);
+            }
         }
     }
 
