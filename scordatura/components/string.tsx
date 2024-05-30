@@ -104,7 +104,6 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}
     }
 
     return (
-        // TODO: Make this flex and nice
         <div className="flex justify-evenly"> 
             {/* Open note */}
             <svg xmlns="http://www.w3.org/2000/svg" width="4vw" height="4vh" viewBox="0 0 100 100" className='mx-[1vw]'
