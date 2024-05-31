@@ -48,11 +48,9 @@ const play = (string: number, note: string, chordOn: boolean) => {
 
 const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn, setChord, currentChord}) => {
     const [toggled, setToggled] = useState('bg-white');
-
     const intervalClick = () => {
         play(string, note, chordOn);
         if (chordOn) {
-            setToggled(prevColor => prevColor === 'bg-white' ? 'bg-black' : 'bg-white');
             let newChord: string[] = Array(...currentChord);
             if (newChord[string] == note) {
                 newChord[string] = '';
@@ -63,6 +61,7 @@ const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn
             }
         }
     }
+
     return (
         <div className={`${toggled} outline-2 outline outline-black min-h-[4vh] w-[10vw] text-center justify-center justify-items-center flex flex-col`}
          onClick={() => intervalClick()} onMouseOver={() => strum(string, note, chordOn)}>
@@ -84,23 +83,40 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}
     const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]}
      string={string} chordOn={chordOn} setChord={setChord} currentChord={currentChord}/>);
 
+    const [selectedInterval, setSelectedInterval] = useState("");
     const [openToggle, setOpen] = useState('white');
     const [openText, setOpenText] = useState('black');
 
+    const openColorUpdate = () => {
+        if (selectedInterval != totalNoteMap[openNote] && openToggle == 'white') {
+            setOpen('black');
+            setOpenText('white');
+        } else if (selectedInterval == totalNoteMap[openNote] && openToggle == 'black') {
+            setOpen('white');
+            setOpenText('black');
+        }   
+    }
+
     const openClick = () => {
         play(string, totalNoteMap[openNote], chordOn);
+        console.log(`INITIAL VALUES: selectedInterval: ${selectedInterval}, totalNoteMap[openNote] ${totalNoteMap[openNote]}`);
         if (chordOn) {
-            setOpen(prevColor => prevColor === 'white' ? 'black' : 'white');
-            setOpenText(prevColor => prevColor === 'black' ? 'white' : 'black');
             let newChord: string[] = Array(...currentChord);
-            if (newChord[string] == totalNoteMap[openNote]) {
-                newChord[string] = "";
+            if (selectedInterval != totalNoteMap[openNote]) {
+                setSelectedInterval(totalNoteMap[openNote]);
+                newChord[string] = ` ${totalNoteMap[openNote]} `;
                 setChord(newChord);
-            } else {
-                newChord[string] = totalNoteMap[openNote];
+            } else if (selectedInterval == totalNoteMap[openNote]) {
+                setSelectedInterval("");
+                newChord[string] = "x";
                 setChord(newChord);
             }
+            console.log(`FINAL VALUES: selectedInterval: ${selectedInterval}, totalNoteMap[openNote] ${totalNoteMap[openNote]},
+            openToggle: ${openToggle}, openText: ${openText}`);
+            
+            openColorUpdate();
         }
+        console.log(selectedInterval);
     }
 
     return (

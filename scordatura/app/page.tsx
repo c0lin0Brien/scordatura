@@ -8,7 +8,7 @@ export const ChordContext = createContext(Array(6));
 
 export default function Home() {
 
-  const [currentChord, setCurrentChord] = useState(Array(6));
+  const [currentChord, setCurrentChord] = useState([' X ', ' X ', ' X ', ' X ', ' X ', ' X ']);
   const [chordMode, setChordMode] = useState(false);
 
   return (
