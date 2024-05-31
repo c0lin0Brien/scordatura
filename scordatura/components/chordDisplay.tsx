@@ -9,7 +9,7 @@ interface ChordDisplayProps {
 const ChordDisplay: React.FC<ChordDisplayProps> = ({chordMode, currentChord}) => {
 
     return(
-        <div>
+        <div className="mx-[2vw]">
             Current Chord: {useContext(ChordContext)}
         </div>
     )
