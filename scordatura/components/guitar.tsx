@@ -30,7 +30,8 @@ const Guitar: React.FC<GuitarProps> = ({chordMode, setChordMode, setChord}) => {
 
     const resetTuning = () => {
         setTuning(standardTuning);
-        setChord(Array(6));
+        setChord([" X ", " X ", " X ", " X ", " X ", " X "]);
+        setChordMode(!chordMode);
         console.log(currentTuning)
     }
 

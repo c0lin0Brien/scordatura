@@ -70,11 +70,15 @@ const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn
     }
 
     const intervalColorUpdate = () => {
-        if (selectedInterval == note && toggled == 'bg-white') {
-            setToggled('bg-black');
-        } else if (selectedInterval != note && toggled == 'bg-black') {
+        if (chordOn) {
+            if (selectedInterval == note && toggled == 'bg-white') {
+                setToggled('bg-black');
+            } else if (selectedInterval != note && toggled == 'bg-black') {
+                setToggled('bg-white');
+            }   
+        } else if (!chordOn && toggled == 'bg-black') {
             setToggled('bg-white');
-        }   
+        }
     }
 
     intervalColorUpdate();
@@ -99,6 +103,7 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}
     const [selectedInterval, setSelectedInterval] = useState("");
     const [openToggle, setOpen] = useState('white');
     const [openText, setOpenText] = useState('black');
+    const defaultChord = [" X ", " X ", " X ", " X ", " X ", " X "];
 
     const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]}
      string={string} chordOn={chordOn} setChord={setChord} currentChord={currentChord} selectedInterval={selectedInterval}
@@ -106,13 +111,36 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}
 
 
     const openColorUpdate = () => {
-        if (selectedInterval == totalNoteMap[openNote] && openToggle == 'white') {
-            setOpen('black');
-            setOpenText('white');
-        } else if (selectedInterval != totalNoteMap[openNote] && openToggle == 'black') {
+        if (chordOn) {
+            if (selectedInterval == totalNoteMap[openNote] && openToggle == 'white') {
+                setOpen('black');
+                setOpenText('white');
+            } else if (selectedInterval != totalNoteMap[openNote] && openToggle == 'black') {
+                setOpen('white');
+                setOpenText('black');
+            }
+        } else if (!chordOn && openToggle == 'black') {
             setOpen('white');
             setOpenText('black');
-        }   
+        }
+    }
+
+    // function for checking if string arrays are equal
+    const arrayEquals = (a: string[], b: string[]) => {
+        if (a === b) return true;
+        if (a == null || b == null) return false;
+        if (a.length !== b.length) return false;
+
+        for (var i = 0; i < a.length; ++i) {
+            if (a[i] !== b[i]) return false;
+        }
+        return true;
+    }
+
+    const resetChord = () => {
+        if (!chordOn && selectedInterval != "") {
+            setSelectedInterval("");
+        }
     }
 
     const openClick = () => {
@@ -135,6 +163,7 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}
     }
 
     openColorUpdate();
+    resetChord();
 
     return (
         <div className="flex justify-evenly"> 
