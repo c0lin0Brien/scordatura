@@ -19,6 +19,9 @@ interface IntervalProps {
     chordOn: boolean;
     setChord: React.Dispatch<React.SetStateAction<string[]>>;
     currentChord: string[];
+    selectedInterval: string;
+    setSelectedInterval: React.Dispatch<React.SetStateAction<string>>;
+
 }
 
 window.addEventListener('mousedown', () => {
@@ -46,21 +49,35 @@ const play = (string: number, note: string, chordOn: boolean) => {
     }
 }
 
-const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn, setChord, currentChord}) => {
+const Interval: React.FC<IntervalProps> = ({ string = 0, note, children, chordOn, setChord, currentChord, selectedInterval, setSelectedInterval}) => {
     const [toggled, setToggled] = useState('bg-white');
+
     const intervalClick = () => {
         play(string, note, chordOn);
         if (chordOn) {
             let newChord: string[] = Array(...currentChord);
-            if (newChord[string] == note) {
-                newChord[string] = '';
+            if (selectedInterval != note) {
+                setSelectedInterval(note);
+                newChord[string] = ` ${note} `;
                 setChord(newChord);
-            } else {
-                newChord[string] = note;
+            } else if (selectedInterval == note) {
+                setSelectedInterval("");
+                newChord[string] = " X ";
                 setChord(newChord);
             }
+            console.log(`FINAL VALUES: selectedInterval: ${selectedInterval}`)
         }
     }
+
+    const intervalColorUpdate = () => {
+        if (selectedInterval == note && toggled == 'bg-white') {
+            setToggled('bg-black');
+        } else if (selectedInterval != note && toggled == 'bg-black') {
+            setToggled('bg-white');
+        }   
+    }
+
+    intervalColorUpdate();
 
     return (
         <div className={`${toggled} outline-2 outline outline-black min-h-[4vh] w-[10vw] text-center justify-center justify-items-center flex flex-col`}
@@ -79,19 +96,20 @@ interface StringProps {
 
 const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}) => {
     let currentChord: string[] = useContext(ChordContext);
-
-    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]}
-     string={string} chordOn={chordOn} setChord={setChord} currentChord={currentChord}/>);
-
     const [selectedInterval, setSelectedInterval] = useState("");
     const [openToggle, setOpen] = useState('white');
     const [openText, setOpenText] = useState('black');
 
+    const notes = Array.from( {length: 22}, (_, index) => <Interval key={index} note={totalNoteMap[openNote + index + 1]}
+     string={string} chordOn={chordOn} setChord={setChord} currentChord={currentChord} selectedInterval={selectedInterval}
+     setSelectedInterval={setSelectedInterval}/>);
+
+
     const openColorUpdate = () => {
-        if (selectedInterval != totalNoteMap[openNote] && openToggle == 'white') {
+        if (selectedInterval == totalNoteMap[openNote] && openToggle == 'white') {
             setOpen('black');
             setOpenText('white');
-        } else if (selectedInterval == totalNoteMap[openNote] && openToggle == 'black') {
+        } else if (selectedInterval != totalNoteMap[openNote] && openToggle == 'black') {
             setOpen('white');
             setOpenText('black');
         }   
@@ -108,16 +126,15 @@ const String: React.FC<StringProps> = ({string = 0, openNote, chordOn, setChord}
                 setChord(newChord);
             } else if (selectedInterval == totalNoteMap[openNote]) {
                 setSelectedInterval("");
-                newChord[string] = "x";
+                newChord[string] = " X ";
                 setChord(newChord);
             }
             console.log(`FINAL VALUES: selectedInterval: ${selectedInterval}, totalNoteMap[openNote] ${totalNoteMap[openNote]},
             openToggle: ${openToggle}, openText: ${openText}`);
-            
-            openColorUpdate();
         }
-        console.log(selectedInterval);
     }
+
+    openColorUpdate();
 
     return (
         <div className="flex justify-evenly"> 
