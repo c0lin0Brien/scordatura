@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import String from './string';
 import { ChordContext } from '@/app/page';
 
@@ -13,6 +13,7 @@ interface GuitarProps {
 const Guitar: React.FC<GuitarProps> = ({chordMode, setChordMode, setChord}) => {
     const standardTuning: number[] = [12, 17, 22, 27, 31, 36];
     const [currentTuning, setTuning] = useState([...standardTuning]);
+    const currentChord = useContext(ChordContext);
 
     const randomInt = (max: number) => {
         return Math.floor(Math.random() * max);
@@ -38,6 +39,18 @@ const Guitar: React.FC<GuitarProps> = ({chordMode, setChordMode, setChord}) => {
     const toggleChord = () => {
         setChordMode(!chordMode);
     }
+
+    const strum = (strummingChord: string[]) => {
+        if (chordMode) {
+            for (let i:number = 0; i < strummingChord.length; i++) {
+                if (strummingChord[i] != " X ") {
+                    console.log(strummingChord[i]);
+                    let audio = new Audio(`/sound/${strummingChord[i].trim()}.mp3`);
+                    audio.play();
+                }
+            }
+        }
+    }
     
     const FretMarker: React.FC = () => {
 
@@ -62,6 +75,7 @@ const Guitar: React.FC<GuitarProps> = ({chordMode, setChordMode, setChord}) => {
                 <button onClick={randomizeTuning}>Randomize</button>
                 <button onClick={resetTuning}>Reset</button>
                 <button onClick={toggleChord}>Chord Builder</button>
+                <button onClick={() => strum(currentChord)}>Strum</button>
             </div>
         </div>
     )
