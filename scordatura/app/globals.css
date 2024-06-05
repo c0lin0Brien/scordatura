@@ -16,6 +16,7 @@
     flex-direction: column;
   } */
   .fretBoard {
+    display: block;
     outline: solid;
     outline-color: black;
     outline-width: 3px;
