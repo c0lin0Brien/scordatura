@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import time
+from chord import Chord
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -18,13 +19,17 @@ html = browser.page_source
 
 chordLinks = browser.find_elements(By.CLASS_NAME, 'pr-2')
 
+chordList = []
+
 for i in chordLinks:
     i.click()
-    time.sleep(1)
     for j in range(50):
-        chordName = browser.find_element(By.XPATH, f'//main/div/div[{2 + j}]/div[1]/a')
-        chordNotes = browser.find_element(By.XPATH, f'//main/div/div[{2 + j}]/div[2]')
-        print(f"{chordName.text} => {chordNotes.text}")
+        chordName = browser.find_element(By.XPATH, f'//main/div/div[{2 + j}]/div[1]/a').text
+        chordNotes = browser.find_element(By.XPATH, f'//main/div/div[{2 + j}]/div[2]').text
+        chordList.append(Chord(chordNotes.split(), chordName))
     browser.back()
 
+for c in chordList:
+    print(c)
+    
 browser.quit()
