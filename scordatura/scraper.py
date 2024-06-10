@@ -31,5 +31,5 @@ for i in chordLinks:
 
 for c in chordList:
     print(c)
-    
+
 browser.quit()
