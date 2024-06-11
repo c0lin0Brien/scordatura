@@ -29,7 +29,7 @@ for i in chordLinks:
         chordList.append(Chord(chordNotes.split(), chordName))
     browser.back()
 
-for c in chordList:
-    print(c)
+with open('chords.json', 'w') as json_file:
+    json.dump(chordList, json_file)
 
 browser.quit()
