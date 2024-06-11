@@ -3,6 +3,7 @@ import React, { useContext, useState, createContext } from "react";
 import Guitar from "@/components/guitar";
 import Header from "@/components/header";
 import ChordDisplay from "@/components/chordDisplay";
+import ChordLog from "@/components/chordMap";
 
 export const ChordContext = createContext(Array(6));
 interface TuningContextType {
@@ -34,6 +35,7 @@ export default function Home() {
           <Guitar chordMode={chordMode} setChordMode={setChordMode} setChord={setCurrentChord}/>
           <ChordDisplay />
         </ChordContext.Provider>
+      <ChordLog />
       </TuningContext.Provider>
     </>
   );

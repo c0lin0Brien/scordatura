@@ -21,15 +21,18 @@ chordLinks = browser.find_elements(By.CLASS_NAME, 'pr-2')
 
 chordList = []
 
+chordDictionary = {}
+
 for i in chordLinks:
     i.click()
     for j in range(50):
         chordName = browser.find_element(By.XPATH, f'//main/div/div[{2 + j}]/div[1]/a').text
         chordNotes = browser.find_element(By.XPATH, f'//main/div/div[{2 + j}]/div[2]').text
-        chordList.append(Chord(chordNotes.split(), chordName))
+        # chordList.append(Chord(chordNotes.split(), chordName))
+        chordDictionary.update({chordName: chordNotes})
     browser.back()
 
 with open('chords.json', 'w') as json_file:
-    json.dump(chordList, json_file)
+    json.dump(chordDictionary, json_file)
 
 browser.quit()
