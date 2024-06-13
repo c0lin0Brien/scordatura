@@ -29,6 +29,14 @@ sharpToFlat = {
 
 chordList = []
 
+# Test on just one chord page
+# testPage = chordLinks[0]
+# testPage.click()
+# for k in range(50):
+#     chordName = browser.find_element(By.XPATH, f'//main/div/div[{2 + k}]/div[1]/a').text
+#     chordNotes = browser.find_element(By.XPATH, f'//main/div/div[{2 + k}]/div[2]').text
+#     chordList.append(Chord(chordNotes.split(), chordName).__dict__)
+
 for i in chordLinks:
     i.click()
     for j in range(50):

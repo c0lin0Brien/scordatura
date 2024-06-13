@@ -25,4 +25,6 @@ class Chord:
         for i in range(len(notesArray)):
             if notesArray[i] in self.sharpToFlat:
                 notesArray[i] = self.sharpToFlat.get(notesArray[i])
-        return notesArray
+        notesArray.sort()
+        returnString = " ".join(notesArray)
+        return returnString
